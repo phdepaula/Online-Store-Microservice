@@ -11,7 +11,7 @@ class Product(BASE):
     __tablename__ = "product"
 
     product_id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(30))
+    name = Column(String(30), unique=True)
     price = Column(Float)
     supplier = Column(String(100))
     category = Column(String(20))
