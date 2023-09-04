@@ -16,6 +16,7 @@ class Product(BASE):
     supplier = Column(String(100))
     category = Column(String(20))
     description = Column(String(500))
+    available_stock = Column(Integer)
 
     def __init__(
         self,
@@ -24,9 +25,11 @@ class Product(BASE):
         supplier: str,
         category: str,
         description: str,
+        available_stock: int
     ):
         self.name = name
         self.price = price
         self.supplier = supplier
         self.category = category
         self.description = description
+        self.available_stock = available_stock
