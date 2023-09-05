@@ -14,7 +14,7 @@ class Sales(BASE):
     sales_id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(30), unique=True)
     quantity = Column(Integer)
-    price = Column(Float)
+    value = Column(Float)
     sale_status = Column(String(10), default = "open")
     sale_date = Column(String(10), default = datetime.today())
     zip_code = Column(String(9))
@@ -28,7 +28,7 @@ class Sales(BASE):
         self,
         name: str,
         quantity: int,
-        price: float,
+        value: float,
         sale_status: str,
         sale_date: datetime,
         zip_cod: str,
@@ -40,7 +40,7 @@ class Sales(BASE):
     ):
         self.name = name
         self.quantity = quantity
-        self.price = price
+        self.value = value
         self.sale_status = sale_status
         self.sale_date = sale_date
         self.zip_cod = zip_cod
