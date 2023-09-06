@@ -46,14 +46,14 @@ class Database:
         """Method to close a session"""
         self._session.close()
 
-    def _create_filter(self, filter_parameters: dict) -> tuple:
+    def _create_filter(self, filter_parameters: dict) -> list:
         desired_filter = [
             column == value for column, value in filter_parameters.items()
         ]
 
         return desired_filter
 
-    def setup_database_environment(self):
+    def setup_database_environment(self) -> None:
         """Method to set up the database environment"""
         self._create_engine()
         self._create_database()
@@ -103,18 +103,36 @@ class Database:
         finally:
             self._close_session()
 
-    def select_data_table(self, column: object, filter_select: dict):
-        """Method for select data of a table"""
+    def select_value_table_parameter(
+        self, column: object, filter_select: dict
+    ):
+        """Method to query the value of a desired parameter"""
         self._create_session()
-        value_fixed = None
 
         try:
             desired_filter = self._create_filter(filter_select)
             value = self._session.query(column).filter(*desired_filter).first()
-            value_fixed = None if len(value) == 0 or value is None else value
+            value_fixed = "" if value is None else value[0]
         except Exception as error:
+            value_fixed = error
             raise error
         finally:
             self._close_session()
 
         return value_fixed
+
+    def select_data_table(self, table: object, filter_select: dict):
+        """Method to select all data from a desired query"""
+        self._create_session()
+
+        try:
+            desired_filter = self._create_filter(filter_select)
+            data = self._session.query(table).filter(*desired_filter).all()
+            data_fixed = "" if data is None else data
+        except Exception as error:
+            data_fixed = error
+            raise error
+        finally:
+            self._close_session()
+
+        return data_fixed
