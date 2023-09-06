@@ -1,5 +1,6 @@
 import resources.documentation
 import resources.products
+import resources.sales
 
 from app import flask_settings, database
 
