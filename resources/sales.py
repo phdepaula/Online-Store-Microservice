@@ -88,6 +88,7 @@ def add_sale(form: AddSalesSchema):
         )
         formatted_response = format_add_sale_response(sale=new_sale)
         database.insert_data_table(new_sale)
+
         return {"message": "Added Sale", "sale": formatted_response}, 200
     except ValueError as value_error:
         return {"message": f"Warning: {value_error}"}, 201
@@ -129,6 +130,7 @@ def close_sale(form: CloseSaleSchema):
             filter_update={Sales.sales_id: sales_id},
             new_data={Sales.sale_status: new_sale_status},
         )
+
         return {"message": f"Sale {sales_id} closed successfully"}, 200
     except ValueError as value_error:
         return {"message": f"Warning: {value_error}"}, 201
@@ -180,6 +182,48 @@ def get_sales():
             full_content.append(sale_product_data)
 
         return {"message": "Open sales consulted", "sales": full_content}, 200
+    except ValueError as value_error:
+        return {"message": f"Warning: {value_error}"}, 201
+    except Exception as error:
+        return {"message": f"Error: {error}"}, 400
+
+
+@app.delete(
+    "/delete_sale",
+    tags=[TAG_SALES],
+    responses={
+        "200": SingleMessageSchema,
+        "201": SingleMessageSchema,
+        "400": SingleMessageSchema,
+    },
+)
+def delete_sale(form: CloseSaleSchema):
+    """Deletes an open sale from the sales table."""
+    sales_id = form.sales_id
+
+    try:
+        registered_sale = database.select_value_table_parameter(
+            column=Sales.sale_status, filter_select={Sales.sales_id: sales_id}
+        )
+
+        if not registered_sale:
+            raise ValueError(f"The sale {sales_id} does not exist")
+
+        sale_status = database.select_value_table_parameter(
+            column=Sales.sale_status, filter_select={Sales.sales_id: sales_id}
+        )
+
+        if sale_status == "close":
+            raise ValueError(
+                f"The sale {sales_id} is closed, it is not possible to delete"
+            )
+
+        database.delete_data_table(
+            table=Sales,
+            filter_delete={Sales.sales_id: sales_id},
+        )
+
+        return {"message": f"Sale {sales_id} deleted successfully"}, 200
     except ValueError as value_error:
         return {"message": f"Warning: {value_error}"}, 201
     except Exception as error:
