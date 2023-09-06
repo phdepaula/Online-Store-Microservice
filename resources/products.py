@@ -5,6 +5,7 @@ from flask_openapi3 import Tag
 
 from app import app, database
 from database.model.product import Product
+from database.model.sales import Sales
 from schemas.products import (
     AddProductSchema,
     DeleteProductSchema,
@@ -96,6 +97,7 @@ def update_stock(form: UpdateProductSchema):
             filter_update={Product.name: name},
             new_data={Product.available_stock: new_stock},
         )
+
         return {"message": "Updated stock", "product": formatted_response}, 200
     except ValueError as value_error:
         return {"message": f"Warning: {value_error}"}, 201
@@ -124,10 +126,20 @@ def delete_product(form: DeleteProductSchema):
         if len(registered_product) == 0:
             raise ValueError("The product does not exist")
 
+        product_sold = database.select_value_table_parameter(
+            column=Sales.name, filter_select={Sales.name: name}
+        )
+
+        if len(product_sold) > 0:
+            raise ValueError(
+                f"{name} has already been sold, it's not possible to delete it"
+            )
+
         database.delete_data_table(
             table=Product,
             filter_delete={Product.name: name},
         )
+
         return {"message": "Product deleted", "name": name}, 200
     except ValueError as value_error:
         return {"message": f"Warning: {value_error}"}, 201
