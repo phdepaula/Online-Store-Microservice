@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Float, Integer, String
+from sqlalchemy import Column, Float, Integer, String, DateTime  
 
 from database.database import Database
 
@@ -16,7 +16,7 @@ class Sales(BASE):
     quantity = Column(Integer)
     value = Column(Float)
     sale_status = Column(String(10), default="open")
-    sale_date = Column(String(10), default=datetime.today())
+    sale_date = Column(DateTime, default=datetime.today())
     zip_code = Column(String(15))
     country = Column(String(50))
     city = Column(String(50))
