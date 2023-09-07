@@ -5,11 +5,14 @@ from flask_openapi3 import Info, OpenAPI
 class Settings:
     """Class to define all Flask settings"""
 
-    def __init__(self, information: Info, secret_key: str, port: int):
+    def __init__(
+        self, information: Info, secret_key: str, port: int, host: str
+    ):
         self._app = None
         self._information = information
         self._secret_key = secret_key
         self._port = port
+        self._host = host
 
     @property
     def app(self):
@@ -27,4 +30,4 @@ class Settings:
         if self._app is None:
             self.generate_app()
 
-        self._app.run(debug=True, port=self._port)
+        self._app.run(debug=True, port=self._port, host=self._host)
