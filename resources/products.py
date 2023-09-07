@@ -1,6 +1,4 @@
 from urllib.parse import unquote
-
-from flask import request
 from flask_openapi3 import Tag
 
 from app import app, database
@@ -8,7 +6,7 @@ from database.model.product import Product
 from database.model.sales import Sales
 from schemas.products import (
     AddProductSchema,
-    DeleteProductSchema,
+    ProductNameSchema,
     MessageProductSchema,
     SingleMessageSchema,
     UpdateProductSchema,
@@ -114,7 +112,7 @@ def update_stock(form: UpdateProductSchema):
         "400": SingleMessageSchema,
     },
 )
-def delete_product(form: DeleteProductSchema):
+def delete_product(form: ProductNameSchema):
     """Delete a product from the product table."""
     name = unquote(unquote(form.name)).strip().title()
 
@@ -156,9 +154,9 @@ def delete_product(form: DeleteProductSchema):
         "400": SingleMessageSchema,
     },
 )
-def get_product():
+def get_product(query: ProductNameSchema):
     """Method to obtain data of registered products."""
-    name = request.view_args.get("name")
+    name = unquote(unquote(query.name)).strip().title()
 
     try:
         registered_product = database.select_value_table_parameter(

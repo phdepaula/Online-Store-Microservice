@@ -48,10 +48,10 @@ class UpdateProductSchema(BaseModel):
     new_stock: int = 1
 
 
-class DeleteProductSchema(BaseModel):
+class ProductNameSchema(BaseModel):
     """
-    Defines how the data informed \
-    for delete a product should be.
+    Defines that a name must be informed \
+    to execute the route
     """
 
     name: str = "Iphone 13"
