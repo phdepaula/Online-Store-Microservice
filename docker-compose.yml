@@ -1,0 +1,18 @@
+version: '3'
+services:
+  meu-app:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: online-store-microservice
+    image: online-store:1.0.0
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./database/database-file/online-store.sqlite3:/app/database/database-file/online-store.sqlite3
+    environment:
+      - API_TITLE=Online Store
+      - VERSION=1.0.0
+      - SECRET_KEY=Advanced Backend Development
+      - PORT=5000
+      - HOST=0.0.0.0
