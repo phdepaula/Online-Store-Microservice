@@ -1,12 +1,17 @@
+import os
+
 from flask_openapi3 import Info
 
 from database.database import Database
 from resources.settings import Settings
 
-INFORMATION = Info(title="Online Store", version="1.0.0")
-SECRET_KEY = "Advanced Backend Development"
-PORT = 5000
-HOST = "0.0.0.0"
+API_TITLE = os.environ.get("API_TITLE")
+VERSION = os.environ.get("VERSION")
+SECRET_KEY = os.environ.get("SECRET_KEY")
+PORT = int(os.environ.get("PORT"))
+HOST = os.environ.get("HOST")
+
+INFORMATION = Info(title=API_TITLE, version=VERSION)
 
 flask_settings = Settings(
     information=INFORMATION, secret_key=SECRET_KEY, port=PORT, host=HOST
