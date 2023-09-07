@@ -17,7 +17,7 @@ Make sure you have [Docker](https://docs.docker.com/engine/install/) installed a
 
 ## ▶️ How to run
 
-To start the application, simply run:
+To start the application, simply run via terminal:
 
 ```
 docker-compose up
