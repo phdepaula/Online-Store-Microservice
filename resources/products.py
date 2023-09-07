@@ -30,11 +30,11 @@ TAG_PRODUCTS = Tag(name="Product", description="Product data control routes.")
 )
 def add_product(form: AddProductSchema):
     """Add a new product to the product table."""
-    name = unquote(unquote(form.name)).title()
+    name = unquote(unquote(form.name)).strip().title()
     price = round(form.price, 2)
-    supplier = unquote(unquote(form.supplier))
-    category = unquote(unquote(form.category))
-    description = unquote(unquote(form.description))
+    supplier = unquote(unquote(form.supplier)).strip().title()
+    category = unquote(unquote(form.category)).strip().title()
+    description = unquote(unquote(form.description)).strip().title()
     available_stock = form.available_stock
 
     try:
@@ -74,7 +74,7 @@ def add_product(form: AddProductSchema):
 )
 def update_stock(form: UpdateProductSchema):
     """Updates the available stock of the specified product."""
-    name = unquote(unquote(form.name)).title()
+    name = unquote(unquote(form.name)).strip().title()
     new_stock = form.new_stock
 
     try:
@@ -116,7 +116,7 @@ def update_stock(form: UpdateProductSchema):
 )
 def delete_product(form: DeleteProductSchema):
     """Delete a product from the product table."""
-    name = unquote(unquote(form.name)).title()
+    name = unquote(unquote(form.name)).strip().title()
 
     try:
         registered_product = database.select_value_table_parameter(

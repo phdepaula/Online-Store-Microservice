@@ -31,21 +31,25 @@ TAG_SALES = Tag(name="SALES", description="Sales data control routes.")
 )
 def add_sale(form: AddSalesSchema):
     """Add a new sale to the sales table."""
-    name = unquote(unquote(form.name)).title()
+    name = unquote(unquote(form.name)).strip().title()
     quantity = form.quantity
     zip_code = unquote(unquote(form.zip_code))
-    country = unquote(unquote(form.country))
-    city = unquote(unquote(form.city))
-    state = unquote(unquote(form.state))
-    street = unquote(unquote(form.street))
-    neighborhood = unquote(unquote(form.neighborhood))
+    country = unquote(unquote(form.country)).strip().title()
+    city = unquote(unquote(form.city)).strip().title()
+    state = unquote(unquote(form.state)).strip().title()
+    street = unquote(unquote(form.street)).strip().title()
+    neighborhood = unquote(unquote(form.neighborhood)).strip().title()
 
     try:
-        if (len(zip_code) < 9 or len(zip_code.split("-")) < 2) and country in [
+        if (
+            len(zip_code) not in [9, 10] or len(zip_code.split("-")) != 2
+        ) and country in [
             "Brazil",
             "Brasil",
         ]:
-            raise ValueError("Incorrect zip code, expected format: nnnnn-nnn")
+            raise ValueError(
+                "Incorrect zip code, expected format: nnnnn-nnn or nnnnn-nnnn"
+            )
 
         registered_product = database.select_value_table_parameter(
             column=Product.name, filter_select={Product.name: name}
