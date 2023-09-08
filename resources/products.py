@@ -32,7 +32,7 @@ def add_product(form: AddProductSchema):
     price = round(form.price, 2)
     supplier = unquote(unquote(form.supplier)).strip().title()
     category = unquote(unquote(form.category)).strip().title()
-    description = unquote(unquote(form.description)).strip().title()
+    description = unquote(unquote(form.description)).strip()
     available_stock = form.available_stock
 
     try:
