@@ -25,7 +25,6 @@ TAG_SALES = Tag(name="SALES", description="Sales data control routes.")
     tags=[TAG_SALES],
     responses={
         "200": MessageSalesSchema,
-        "201": SingleMessageSchema,
         "400": SingleMessageSchema,
     },
 )
@@ -47,7 +46,7 @@ def add_sale(form: AddSalesSchema):
             "Brazil",
             "Brasil",
         ]:
-            raise ValueError(
+            raise Exception(
                 "Incorrect zip code, expected format: nnnnn-nnn or nnnnn-nnnn"
             )
 
@@ -56,14 +55,14 @@ def add_sale(form: AddSalesSchema):
         )
 
         if len(registered_product) == 0:
-            raise ValueError("The product does not exist")
+            raise Exception("The product does not exist")
 
         available_stock = database.select_value_table_parameter(
             column=Product.available_stock, filter_select={Product.name: name}
         )
 
         if quantity > available_stock:
-            raise ValueError(
+            raise Exception(
                 f"There are only {available_stock} unit(s) available in stock"
             )
 
@@ -72,7 +71,7 @@ def add_sale(form: AddSalesSchema):
         update_response = update_stock(update_form)[0]
 
         if update_response["message"] != "Updated stock":
-            raise ValueError("Error updating stock")
+            raise Exception("Error updating stock")
 
         price = database.select_value_table_parameter(
             column=Product.price, filter_select={Product.name: name}
@@ -94,8 +93,6 @@ def add_sale(form: AddSalesSchema):
         database.insert_data_table(new_sale)
 
         return {"message": "Added Sale", "sale": formatted_response}, 200
-    except ValueError as value_error:
-        return {"message": f"Warning: {value_error}"}, 201
     except Exception as error:
         return {"message": f"Error: {error}"}, 400
 
@@ -105,7 +102,6 @@ def add_sale(form: AddSalesSchema):
     tags=[TAG_SALES],
     responses={
         "200": SingleMessageSchema,
-        "201": SingleMessageSchema,
         "400": SingleMessageSchema,
     },
 )
@@ -119,14 +115,14 @@ def close_sale(form: CloseSaleSchema):
         )
 
         if not registered_sale:
-            raise ValueError(f"The sale {sales_id} does not exist")
+            raise Exception(f"The sale {sales_id} does not exist")
 
         sale_status = database.select_value_table_parameter(
             column=Sales.sale_status, filter_select={Sales.sales_id: sales_id}
         )
 
         if sale_status == "close":
-            raise ValueError(f"The sale {sales_id} is already closed")
+            raise Exception(f"The sale {sales_id} is already closed")
 
         new_sale_status = "close"
         database.update_data_table(
@@ -136,8 +132,6 @@ def close_sale(form: CloseSaleSchema):
         )
 
         return {"message": f"Sale {sales_id} closed successfully"}, 200
-    except ValueError as value_error:
-        return {"message": f"Warning: {value_error}"}, 201
     except Exception as error:
         return {"message": f"Error: {error}"}, 400
 
@@ -147,7 +141,6 @@ def close_sale(form: CloseSaleSchema):
     tags=[TAG_SALES],
     responses={
         "200": SaleResponseSchema,
-        "201": SingleMessageSchema,
         "400": SingleMessageSchema,
     },
 )
@@ -162,7 +155,7 @@ def get_sales():
         )
 
         if len(open_sales) == 0:
-            raise ValueError("There are no open sales")
+            raise Exception("There are no open sales")
 
         full_content = []
 
@@ -186,8 +179,6 @@ def get_sales():
             full_content.append(sale_product_data)
 
         return {"message": "Open sales consulted", "sales": full_content}, 200
-    except ValueError as value_error:
-        return {"message": f"Warning: {value_error}"}, 201
     except Exception as error:
         return {"message": f"Error: {error}"}, 400
 
@@ -197,7 +188,6 @@ def get_sales():
     tags=[TAG_SALES],
     responses={
         "200": SingleMessageSchema,
-        "201": SingleMessageSchema,
         "400": SingleMessageSchema,
     },
 )
@@ -211,14 +201,14 @@ def delete_sale(form: CloseSaleSchema):
         )
 
         if not registered_sale:
-            raise ValueError(f"The sale {sales_id} does not exist")
+            raise Exception(f"The sale {sales_id} does not exist")
 
         sale_status = database.select_value_table_parameter(
             column=Sales.sale_status, filter_select={Sales.sales_id: sales_id}
         )
 
         if sale_status == "close":
-            raise ValueError(
+            raise Exception(
                 f"The sale {sales_id} is closed, it is not possible to delete"
             )
 
@@ -228,7 +218,5 @@ def delete_sale(form: CloseSaleSchema):
         )
 
         return {"message": f"Sale {sales_id} deleted successfully"}, 200
-    except ValueError as value_error:
-        return {"message": f"Warning: {value_error}"}, 201
     except Exception as error:
         return {"message": f"Error: {error}"}, 400

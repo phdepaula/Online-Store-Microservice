@@ -22,7 +22,6 @@ TAG_PRODUCTS = Tag(name="Product", description="Product data control routes.")
     tags=[TAG_PRODUCTS],
     responses={
         "200": MessageProductSchema,
-        "201": SingleMessageSchema,
         "400": SingleMessageSchema,
     },
 )
@@ -41,7 +40,7 @@ def add_product(form: AddProductSchema):
         )
 
         if len(registered_product) > 0:
-            raise ValueError("Product already registered")
+            raise Exception("Product already registered")
 
         new_product = Product(
             name=name,
@@ -55,8 +54,6 @@ def add_product(form: AddProductSchema):
         database.insert_data_table(new_product)
 
         return {"message": "Added Product", "product": formatted_response}, 200
-    except ValueError as value_error:
-        return {"message": f"Warning: {value_error}"}, 201
     except Exception as error:
         return {"message": f"Error: {error}"}, 400
 
@@ -66,7 +63,6 @@ def add_product(form: AddProductSchema):
     tags=[TAG_PRODUCTS],
     responses={
         "200": MessageProductSchema,
-        "201": SingleMessageSchema,
         "400": SingleMessageSchema,
     },
 )
@@ -81,7 +77,7 @@ def update_stock(form: UpdateProductSchema):
         )
 
         if len(registered_product) == 0:
-            raise ValueError("The product does not exist")
+            raise Exception("The product does not exist")
 
         old_stock = database.select_value_table_parameter(
             column=Product.available_stock, filter_select={Product.name: name}
@@ -97,8 +93,6 @@ def update_stock(form: UpdateProductSchema):
         )
 
         return {"message": "Updated stock", "product": formatted_response}, 200
-    except ValueError as value_error:
-        return {"message": f"Warning: {value_error}"}, 201
     except Exception as error:
         return {"message": f"Error: {error}"}, 400
 
@@ -108,7 +102,6 @@ def update_stock(form: UpdateProductSchema):
     tags=[TAG_PRODUCTS],
     responses={
         "200": MessageProductSchema,
-        "201": SingleMessageSchema,
         "400": SingleMessageSchema,
     },
 )
@@ -122,14 +115,14 @@ def delete_product(form: ProductNameSchema):
         )
 
         if len(registered_product) == 0:
-            raise ValueError("The product does not exist")
+            raise Exception("The product does not exist")
 
         product_sold = database.select_value_table_parameter(
             column=Sales.name, filter_select={Sales.name: name}
         )
 
         if len(product_sold) > 0:
-            raise ValueError(
+            raise Exception(
                 f"{name} has already been sold, it's not possible to delete it"
             )
 
@@ -139,8 +132,6 @@ def delete_product(form: ProductNameSchema):
         )
 
         return {"message": "Product deleted", "name": name}, 200
-    except ValueError as value_error:
-        return {"message": f"Warning: {value_error}"}, 201
     except Exception as error:
         return {"message": f"Error: {error}"}, 400
 
@@ -150,7 +141,6 @@ def delete_product(form: ProductNameSchema):
     tags=[TAG_PRODUCTS],
     responses={
         "200": MessageProductSchema,
-        "201": SingleMessageSchema,
         "400": SingleMessageSchema,
     },
 )
@@ -164,7 +154,7 @@ def get_product(query: ProductNameSchema):
         )
 
         if len(registered_product) == 0:
-            raise ValueError("The product does not exist")
+            raise Exception("The product does not exist")
 
         product_data = database.select_data_table(
             table=Product,
@@ -174,7 +164,5 @@ def get_product(query: ProductNameSchema):
         formatted_response = format_product_response(product_data)
 
         return {"message": "Product all data", "product": formatted_response}, 200
-    except ValueError as value_error:
-        return {"message": f"Warning: {value_error}"}, 201
     except Exception as error:
         return {"message": f"Error: {error}"}, 400
