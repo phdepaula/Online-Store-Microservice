@@ -54,7 +54,7 @@ class ProductNameSchema(BaseModel):
     to execute the route
     """
 
-    name: str = "Iphone 13"
+    name: str
 
 
 def format_product_response(product: Product) -> dict:
