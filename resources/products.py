@@ -137,7 +137,7 @@ def delete_product(form: ProductNameSchema):
 
 
 @app.get(
-    "/get_product/<string:name>",
+    "/get_product/",
     tags=[TAG_PRODUCTS],
     responses={
         "200": MessageProductSchema,

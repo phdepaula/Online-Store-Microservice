@@ -168,9 +168,9 @@ def get_sales():
             other_sale_data = format_add_sale_response(sale)
             sale_product_data.update(other_sale_data)
 
-            get_product_url = "http://127.0.0.1:5000/get_product"
+            get_product_url = "http://127.0.0.1:5000/get_product/?name="
             name = sale_product_data.get("name")
-            response_get_product = requests.get(f"{get_product_url}/{name}")
+            response_get_product = requests.get(f"{get_product_url}{name}")
 
             if response_get_product.status_code == 200:
                 product_data = response_get_product.json()["product"]
