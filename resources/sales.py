@@ -108,9 +108,9 @@ def add_sale(form: AddSalesSchema):
         "400": SingleMessageSchema,
     },
 )
-def close_sale(query: CloseSaleSchema):
+def close_sale(form: CloseSaleSchema):
     """Closes a sale from the sales table."""
-    sales_id = query.sales_id
+    sales_id = form.sales_id
 
     try:
         registered_sale = database.select_value_table_parameter(
@@ -167,6 +167,9 @@ def get_sales():
 
             sales_id = sale.sales_id
             sale_product_data["sales_id"] = sales_id
+
+            sale_date = sale.sale_date
+            sale_product_data["sale_date"] = sale_date
 
             other_sale_data = format_add_sale_response(sale)
             sale_product_data.update(other_sale_data)
