@@ -124,10 +124,10 @@ def close_sale(form: CloseSaleSchema):
             column=Sales.sale_status, filter_select={Sales.sales_id: sales_id}
         )
 
-        if sale_status == "closed":
+        if sale_status == "Closed":
             raise Exception(f"The sale {sales_id} is already closed")
 
-        new_sale_status = "closed"
+        new_sale_status = "Closed"
         database.update_data_table(
             table=Sales,
             filter_update={Sales.sales_id: sales_id},
@@ -151,7 +151,7 @@ def get_sales():
     """Method to get all open sales data."""
 
     try:
-        status_open = "open"
+        status_open = "Open"
         open_sales = database.select_data_table(
             table=Sales,
             filter_select={Sales.sale_status: status_open},
@@ -213,7 +213,7 @@ def delete_sale(form: CloseSaleSchema):
             column=Sales.sale_status, filter_select={Sales.sales_id: sales_id}
         )
 
-        if sale_status == "closed":
+        if sale_status == "Closed":
             raise Exception(
                 f"The sale {sales_id} is closed, it is not possible to delete"
             )

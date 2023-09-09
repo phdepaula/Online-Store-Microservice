@@ -15,7 +15,7 @@ class Sales(BASE):
     name = Column(String(30))
     quantity = Column(Integer)
     value = Column(Float)
-    sale_status = Column(String(10), default="open")
+    sale_status = Column(String(10), default="Open")
     sale_date = Column(DateTime, default=datetime.today())
     zip_code = Column(String(15))
     country = Column(String(50))
