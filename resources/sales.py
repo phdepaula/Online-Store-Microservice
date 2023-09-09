@@ -124,10 +124,10 @@ def close_sale(form: CloseSaleSchema):
             column=Sales.sale_status, filter_select={Sales.sales_id: sales_id}
         )
 
-        if sale_status == "close":
+        if sale_status == "closed":
             raise Exception(f"The sale {sales_id} is already closed")
 
-        new_sale_status = "close"
+        new_sale_status = "closed"
         database.update_data_table(
             table=Sales,
             filter_update={Sales.sales_id: sales_id},
@@ -213,7 +213,7 @@ def delete_sale(form: CloseSaleSchema):
             column=Sales.sale_status, filter_select={Sales.sales_id: sales_id}
         )
 
-        if sale_status == "close":
+        if sale_status == "closed":
             raise Exception(
                 f"The sale {sales_id} is closed, it is not possible to delete"
             )
