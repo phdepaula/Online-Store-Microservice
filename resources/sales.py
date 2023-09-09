@@ -40,6 +40,9 @@ def add_sale(form: AddSalesSchema):
     neighborhood = unquote(unquote(form.neighborhood)).strip().title()
 
     try:
+        if len(country.strip()) == 0:
+            raise Exception("Country name not given")
+
         if (
             len(zip_code) not in [9, 10] or len(zip_code.split("-")) != 2
         ) and country in [
