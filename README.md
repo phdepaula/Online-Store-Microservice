@@ -15,6 +15,19 @@ This project was developed for my full-stack development specialization and is r
 
 Make sure you have [Docker](https://docs.docker.com/engine/install/) installed and running on your machine.
 
+Once this is done, check if the external network **puc-microservice** is already created.
+To check, run the following command in the terminal:
+
+```
+docker network ls
+```
+
+If the network does not exist, run the following command to create it:
+
+```
+docker network create puc-microservice
+```
+
 ## ▶️ How to run
 
 To start the application, simply run via terminal:
