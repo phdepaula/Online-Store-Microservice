@@ -1,6 +1,6 @@
 version: '3'
 services:
-  meu-app:
+  meu-app-online-store:
     build:
       context: .
       dockerfile: dockerfile
@@ -17,3 +17,9 @@ services:
       - PORT=5000
       - HOST=0.0.0.0
       - TZ=America/Sao_Paulo
+    networks:
+      - puc-microservice
+
+networks:
+  puc-microservice:
+    external: true
