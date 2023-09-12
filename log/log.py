@@ -10,7 +10,7 @@ class Log:
     def __init__(self):
         self._log_date = self.CURRENT_DATE.strftime("%d%m%Y%H%M%S")
         self._log_name = f"log_{self._log_date}.txt"
-        self._log_directory = os.path.join(os.getcwd(), "logs-files")
+        self._log_directory = os.path.join(os.getcwd(), "log", "logs-files")
         self._log_path = os.path.join(self._log_directory, self._log_name)
         self._status = False
 
@@ -25,7 +25,7 @@ class Log:
             initial_content = [
                 f"{'*'*70}\n",
                 f"{'*'*1}{' '*22}Online Store Microservice{' '*21}{'*'*1}\n",
-                f"{'*'*1}{' '*2}Acesso: {access_date}{' '*39}{'*'*1}\n",
+                f"{'*'*1}{' '*2}Access: {access_date}{' '*39}{'*'*1}\n",
                 f"{'*'*70}\n",
             ]
 
