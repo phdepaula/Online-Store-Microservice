@@ -24,8 +24,9 @@ class Log:
         if not os.path.exists(self._log_path):
             initial_content = [
                 f"{'*'*70}\n",
-                f"{'*'*23}Online Store Microservice{'*'*22}\n",
-                f"{'*'*3}Acesso: {access_date}{'*'*40}\n" f"{'*'*70}\n",
+                f"{'*'*1}{' '*22}Online Store Microservice{' '*21}{'*'*1}\n",
+                f"{'*'*1}{' '*2}Acesso: {access_date}{' '*39}{'*'*1}\n",
+                f"{'*'*70}\n",
             ]
 
             with open(self._log_path, "w") as log_file:
