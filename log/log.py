@@ -34,7 +34,7 @@ class Log:
 
             self._status = True
 
-    def add_new_content(self, message: str) -> None:
+    def add_message(self, message: str) -> None:
         """Method to add a message to the log file"""
         if self._status is False:
             self.start_log()
