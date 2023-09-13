@@ -66,16 +66,16 @@ def add_product(form: AddProductSchema):
             "product": formatted_response
         }
 
-        log.add_message(f"Api response: {return_data}")
-        log.add_message("Api Status: 200")
+        log.add_message(f"Add_procuct response: {return_data}")
+        log.add_message("Add_procuct status: 200")
         log.add_message("")
 
         return return_data, 200
     except Exception as error:
         return_data = {"message": f"Error: {error}"}
 
-        log.add_message(f"Api response: {return_data}")
-        log.add_message("Api Status: 400")
+        log.add_message(f"Add_procuct response: {return_data}")
+        log.add_message("Add_procuct status: 400")
         log.add_message("")
 
         return return_data, 400
@@ -128,16 +128,16 @@ def update_stock(form: UpdateProductSchema):
             "product": formatted_response
         }
 
-        log.add_message(f"Api response: {return_data}")
-        log.add_message("Api Status: 200")
+        log.add_message(f"Update_stock response: {return_data}")
+        log.add_message("Update_stock status: 200")
         log.add_message("")
 
         return return_data, 200
     except Exception as error:
         return_data = {"message": f"Error: {error}"}
 
-        log.add_message(f"Api response: {return_data}")
-        log.add_message("Api Status: 400")
+        log.add_message(f"Update_stock response: {return_data}")
+        log.add_message("Update_stock status: 400")
         log.add_message("")
 
         return return_data, 400
@@ -191,16 +191,16 @@ def delete_product(form: ProductNameSchema):
 
         return_data = {"message": "Product deleted", "name": name}
 
-        log.add_message(f"Api response: {return_data}")
-        log.add_message("Api Status: 200")
+        log.add_message(f"Delete_product response: {return_data}")
+        log.add_message("Delete_product status: 200")
         log.add_message("")
 
         return return_data, 200
     except Exception as error:
         return_data = {"message": f"Error: {error}"}
 
-        log.add_message(f"Api response: {return_data}")
-        log.add_message("Api Status: 400")
+        log.add_message(f"Delete_product response: {return_data}")
+        log.add_message("Delete_product status: 400")
         log.add_message("")
 
         return return_data, 400
@@ -246,16 +246,16 @@ def get_product(query: ProductNameSchema):
             "product": formatted_response
         }
 
-        log.add_message(f"Api response: {return_data}")
-        log.add_message("Api Status: 200")
+        log.add_message(f"Get_product response: {return_data}")
+        log.add_message("Get_product status: 200")
         log.add_message("")
 
         return return_data, 200
     except Exception as error:
         return_data = {"message": f"Error: {error}"}
 
-        log.add_message(f"Api response: {return_data}")
-        log.add_message("Api Status: 400")
+        log.add_message(f"Get_product response: {return_data}")
+        log.add_message("Get_product status: 400")
         log.add_message("")
 
         return return_data, 400
