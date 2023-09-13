@@ -3,9 +3,8 @@ import os
 from flask_openapi3 import Info
 
 from database.database import Database
-from resources.settings import Settings
 from log.log import Log
-
+from resources.settings import Settings
 
 API_TITLE = os.environ.get("API_TITLE")
 VERSION = os.environ.get("VERSION")
