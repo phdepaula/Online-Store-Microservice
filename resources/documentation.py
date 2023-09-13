@@ -16,5 +16,6 @@ def documentation_route():
     a screen that allows choosing the documentation style.
     """
     log.add_message("Documentation accessed")
+    log.add_message("")
 
     return redirect("/openapi")
