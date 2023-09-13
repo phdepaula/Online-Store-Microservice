@@ -10,5 +10,5 @@ if __name__ == "__main__":
     database.setup_database_environment()
 
     log.add_message("Starting Flask Settings")
-    log.add_message(" ")
+    log.add_message("")
     flask_settings.run_aplication()
