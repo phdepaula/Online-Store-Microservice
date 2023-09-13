@@ -32,7 +32,7 @@ class Log:
             with open(self._log_path, "w") as log_file:
                 log_file.writelines(initial_content)
 
-            self._status = True
+        self._status = True
 
     def add_message(self, message: str) -> None:
         """Method to add a message to the log file"""
