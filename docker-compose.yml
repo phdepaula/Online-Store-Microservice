@@ -3,7 +3,7 @@ services:
   meu-app-online-store:
     build:
       context: .
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     container_name: online-store-microservice
     image: online-store:1.0.0
     ports:
