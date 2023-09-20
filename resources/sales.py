@@ -17,7 +17,7 @@ from schemas.sales import (
     format_add_sale_response,
 )
 
-TAG_SALES = Tag(name="SALES", description="Sales data control routes.")
+TAG_SALES = Tag(name="Sales", description="Sales data control routes.")
 
 
 @app.post(
