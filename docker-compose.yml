@@ -9,7 +9,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./database/database-file/online-store.sqlite3:/app/database/database-file/online-store.sqlite3
+      - ./database/database-file:/app/database/database-file
       - ./log/logs-files:/app/log/logs-files
     environment:
       - API_TITLE=Online Store
